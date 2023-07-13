@@ -1,0 +1,3 @@
+select name,'университет' as object_type from college c union
+select name,'курс' as object_type from course co
+order by object_type desc ,"name"  

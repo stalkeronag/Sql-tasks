@@ -1,0 +1,1 @@
+select name,amount_of_students from course where is_online and amount_of_students between 27 and 310 order by "name" desc,amount_of_students desc 

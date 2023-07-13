@@ -1,0 +1,3 @@
+select name from student s union
+select name from course c 
+order by name desc

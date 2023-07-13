@@ -1,0 +1,5 @@
+create or replace trigger trg_check_contact
+before update or insert 
+on student 
+for each row 
+execute procedure  fnc_trg_check_contact();

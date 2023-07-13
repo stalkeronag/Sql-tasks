@@ -1,0 +1,12 @@
+select course_name,
+case 
+	when student_name is null then 'курс не используется'
+	else student_name 
+end 
+from student_on_course soc 
+full join (select id as cour_id, name as course_name,is_online from course ) as co
+on soc.course_id = co.cour_id  and co.is_online = false 
+full join (select name as student_name, id as stud_id from student s) as s 
+on s.stud_id  = soc.student_id 
+where is_online = false
+order by course_name, student_name 

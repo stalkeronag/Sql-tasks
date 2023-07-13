@@ -1,0 +1,4 @@
+create or replace view v_student_college as 
+select s.name as student_name, c.name as college_name from student s 
+join college c 
+on c.id = s.college_id 

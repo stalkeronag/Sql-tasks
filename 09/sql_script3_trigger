@@ -1,0 +1,5 @@
+create or replace trigger trg_audit_college
+after insert or update or delete 
+on college
+for each row 
+execute procedure fnc_trg_audit_college();

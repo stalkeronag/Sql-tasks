@@ -1,0 +1,10 @@
+delete from student_on_course_kn as soc 
+where soc.id  in 
+(
+	select id from student_on_course_kn as soc1
+	join (select city,id as id_stud from student ) as stud_info 
+	on soc1.student_id  = stud_info.id_stud 
+	join (select name,id as cou_id from course) as course_info
+	on soc1.course_id = course_info.cou_id
+	where stud_info.city = 'Новосибирск' and course_info.name = 'Цифровая трансформация'
+)

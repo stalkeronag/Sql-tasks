@@ -1,0 +1,15 @@
+insert into student_on_course_kn(id, student_id, course_id, student_rating, finished_date)
+select 
+id, 
+student_id, 
+course_id, 
+CASE
+        WHEN student_rating BETWEEN 0 AND 60 THEN student_rating - 5
+        WHEN student_rating BETWEEN 61 AND 80 THEN student_rating - 10
+        WHEN student_rating BETWEEN 81 AND 90 THEN student_rating - 15
+        ELSE student_rating - 20
+    end,
+finished_date from student_on_course as soc1
+	join (select city,id as stud_id from student) as stud_info
+	on soc1.student_id  = stud_info.stud_id
+	where stud_info.city = 'Москва'

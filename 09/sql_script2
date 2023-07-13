@@ -1,0 +1,8 @@
+create or replace function fnc_trg_check_contact() returns trigger as $$
+begin 
+	if new.telegram_contact is null then
+		new.telegram_contact := '@default_contact';
+	end if;
+	return new;
+end;
+$$LANGUAGE plpgsql;

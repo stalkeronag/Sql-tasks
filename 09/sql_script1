@@ -1,0 +1,11 @@
+create or replace function fnc_trg_check_permissions() returns trigger as $$
+begin
+if ((extract(dow from now()) in (1,2,3,4,5))
+and extract(hour from now())>=9
+and extract(hour from now())<18)
+then return new;
+else
+raise exception 'Вы не можете выполнить изменение данных в нерабочее время';
+end if;
+end;
+$$LANGUAGE plpgsql;

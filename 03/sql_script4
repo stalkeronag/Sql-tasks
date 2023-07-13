@@ -1,0 +1,1 @@
+insert into course(id, name, is_online, amount_of_students, college_id) values (60, 'Machine Learning', false, 17, 20)	

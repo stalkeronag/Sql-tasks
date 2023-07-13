@@ -1,0 +1,30 @@
+insert into role_student (id, role_name, student_id)
+values(60, 'QA тестировщик', 10);
+insert into student_dependency(id, student_id, manager_student_id,role_id)
+values(60, 10, 30, 60);
+select
+s.name,
+role_name as роль,
+case
+        when name_level_2 notnull and name_level_3 notnull then 3
+        when name_level_3 isnull and name_level_2 notnull then 2
+        else 1
+end as "уровень",
+case
+        when name_level_2 notnull and name_level_3 notnull then concat(name_level_3, '->', name_level_2, '->', name)
+        when name_level_3 isnull and name_level_2 notnull then concat(name_level_2, '->', name)
+        else name
+end as "путь от лидера"
+from student s
+full join (select student_id, manager_student_id, role_id  from student_dependency sd) as sd1
+on sd1.student_id = s.id
+full join (select id, name as name_level_2 from student s2) as s2
+on s2.id = sd1.manager_student_id
+full join (select student_id, manager_student_id from student_dependency sd2) as sd2
+on sd2.student_id =sd1.manager_student_id
+full join (select id, name as name_level_3  from student s3) as s3
+on s3.id = sd2.manager_student_id
+join (select * from role_student rs) as rs
+on rs.id = sd1.role_id
+where s.id notnull
+order by уровень,роль

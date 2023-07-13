@@ -1,0 +1,14 @@
+create or replace view v_student_course_rating
+as select 
+s.name as student_name,
+c.name as course_name,
+c2.name as student_college,
+soc.student_rating 
+from student_on_course soc 
+join student s 
+on s.id = soc.student_id 
+join course c 
+on c.id = soc.course_id 
+join college c2 
+on c2.id = soc.student_id 
+order by student_name, course_name

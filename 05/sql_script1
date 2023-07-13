@@ -1,0 +1,9 @@
+select  student_name, course_name, student_college, student_rating from student_on_course soc 
+join (select name as student_name, id as st_id, college_id from student s) as st
+on st_id = student_id  
+join (select id as coll_id, name as student_college,size as size_college from college ) as coll
+on coll_id = college_id
+join (select name as course_name,id as cour_id from course ) as cour
+on cour_id = course_id 
+where student_rating > 50 and size_college > 5000
+order by student_name , course_name 

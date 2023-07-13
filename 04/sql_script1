@@ -1,0 +1,8 @@
+create table student_on_course_kn as
+select * from student_on_course soc 
+where id in
+(
+select id from student_on_course soc2 
+join (select city,id as id_std from student s) as info_student on info_student.id_std = soc2.student_id  
+where info_student.city = 'Казань' or info_student.city = 'Новосибирск'
+)

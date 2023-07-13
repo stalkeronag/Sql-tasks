@@ -1,0 +1,9 @@
+select cast(num as dec(12,4))/den as val from
+	(select count(*) as num from 
+		(select id from course c 
+		intersect 
+		select id from student_on_course soc) as n) as numValue,
+	(select count(*) as den from 
+		(select id from course c 
+		union 
+		select id from student_on_course soc) as d) as denValue

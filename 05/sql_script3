@@ -1,0 +1,6 @@
+select student_name, course_date from student_on_course soc 
+join (select id as cour_id, college_id, name as course_date from course) as co
+on soc.course_id = cour_id
+join (select id as stud_id, name as student_name,college_id as coll_stud_id from student s) as s
+on s.coll_stud_id = co.college_id and s.stud_id = soc.student_id 
+order by student_name

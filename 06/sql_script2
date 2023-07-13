@@ -1,0 +1,14 @@
+select 
+cour_name as курс,
+case 
+	when student_rating < 30 then 'неудолетворительно'
+	when student_rating >= 30 and student_rating < 60 then 'удовлетворительно'
+	when student_rating >=60 and student_rating < 85 then 'хорошо'
+	else 'отлично'
+end as оценка,
+count(student_rating) as "количество студентов"
+from student_on_course soc  
+join (select id as cour_id, name as cour_name from course c) as cour
+on cour_id = course_id 
+group by оценка,cour_name
+order by cour_name, оценка

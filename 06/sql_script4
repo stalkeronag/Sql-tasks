@@ -1,0 +1,19 @@
+select 
+row_number() over(partition by 'количество студентов') as "# строки",
+row_number() over(partition by tem.курс) as "# строки в группе",*
+from 
+(select
+cour_name as курс,
+case 
+	when student_rating < 30 then 'неудолетворительно'
+	when student_rating >= 30 and student_rating < 60 then 'удовлетворительно'
+	when student_rating >=60 and student_rating < 85 then 'хорошо'
+	else 'отлично'
+end as оценка,
+count(*) as "количество студентов"
+from student_on_course soc  
+join (select id as cour_id, name as cour_name from course c) as cour
+on cour_id = course_id 
+group by cube (оценка,cour_name)
+order by cour_name, оценка
+) as tem

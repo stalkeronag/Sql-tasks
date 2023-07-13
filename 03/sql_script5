@@ -1,0 +1,8 @@
+select id  from course c 
+except
+select id from student_on_course soc 
+union
+select id from student_on_course soc2 
+except
+select id from course c2 
+order by id

@@ -1,0 +1,6 @@
+select 
+min(student_rating) as min_student_rating,
+max(student_rating) as max_student_rating,
+round(avg(student_rating),2) as avg_student_rating,
+sum(student_rating) as sum_student_rating
+from student_on_course soc 

@@ -1,0 +1,5 @@
+create trigger trg_check_permissions
+before insert or update or delete
+on course
+for each statement
+execute procedure fnc_trg_check_permissions();

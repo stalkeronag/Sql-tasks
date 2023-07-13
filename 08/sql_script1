@@ -1,0 +1,41 @@
+create or replace function  getStudentHierarchy(p_manager_id integer default null) 
+returns table(
+студент varchar,
+роль varchar,
+уровень integer,
+"путь от лидера" varchar) as $$ 
+begin 
+	return query
+	with recursive r as 
+	(
+		select s.name,
+		student_id , 
+		rls.role_name ,
+		manager_student_id, 
+		1 as уровень,
+		s.name as путь
+		from student_dependency as sd
+		join (select id, name from student s) s 
+		on sd.student_id = s.id 
+		join (select id, role_name from role_student as rls) as rls
+		on rls.id  = sd.role_id 
+		where (p_manager_id is null and manager_student_id is null) or manager_student_id = p_manager_id
+		union all
+		select  
+		s2.name, 
+		sd2.student_id , 
+		rls2.role_name ,
+		sd2.manager_student_id,
+		r.уровень + 1,
+		concat(r.путь,'->',s2.name) as путь
+		from student_dependency as sd2
+		join (select id, name from student s) s2 
+		on sd2.student_id = s2.id 
+		join (select id, role_name from role_student as rls2) as rls2
+		on rls2.id  = sd2.role_id 
+		join r 
+		on sd2.manager_student_id  = r.student_id
+	)
+	select r.name,r.role_name ,r.уровень, r.путь from r;
+end;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,2 @@
+insert into student_on_course
+values(140, 30, 20, 53, '2023-01-15')

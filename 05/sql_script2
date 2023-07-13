@@ -1,0 +1,5 @@
+select name as student_1, student_2 , city
+FROM student
+join (select name as student_2, city as st2_city,id as st2_id  from student ) as st2
+on st2_city = city and student_2  < name 
+order by name

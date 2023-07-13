@@ -1,0 +1,7 @@
+select city from 
+(
+ select city, count(city) from student s 
+ group by city
+ having count(city) = 2
+) as tmp
+order by city

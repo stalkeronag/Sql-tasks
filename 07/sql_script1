@@ -1,0 +1,36 @@
+create table role_student
+(
+id bigint primary key,
+role_name varchar(60) not null,
+student_id bigint not null,
+constraint fk_student_id foreign key (student_id) references student(id)
+);
+insert into role_student(id, role_name, student_id)
+values(10, 'лидер проекта', 50);
+insert into role_student(id, role_name, student_id)
+values(20, 'тимлид команды разработчиков', 40);
+insert into role_student(id, role_name, student_id)
+values(30, 'тимлид команды специалистов по тестированию', 30);
+insert into role_student(id, role_name, student_id)
+values(40, 'backend разработчик', 20);
+insert into role_student(id, role_name, student_id)
+values(50, 'frontend разработчик', 10);
+create table student_dependency
+(
+id bigint primary key not null,
+student_id bigint,
+manager_student_id bigint,
+role_id bigint,
+constraint fl_role_id foreign key(role_id) references role_student(id),
+constraint fk_manager_student_id foreign key(manager_student_id) references student(id)
+);
+insert into student_dependency (id, student_id , manager_student_id, role_id)
+values(10, 50, null, 10);
+insert into student_dependency (id, student_id, manager_student_id, role_id)
+values(20, 40, 50, 20);
+insert into student_dependency (id, student_id , manager_student_id, role_id)
+values(30, 30, 50, 30);
+insert into student_dependency (id, student_id , manager_student_id, role_id)
+values(40, 20, 40, 40);
+insert into student_dependency (id, student_id , manager_student_id, role_id)
+values(50, 10, 40, 50);
